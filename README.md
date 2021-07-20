@@ -1,0 +1,2 @@
+# 15 JS Projects
+These are 15 (more) awesome projects I coded along with the [Vanilla JS Course](https://www.youtube.com/watch?v=3PHXvlpOkf4). The projects have got prepared CSS and are written in pure JS. Mostly they revolve around DOM and its manipulation.
