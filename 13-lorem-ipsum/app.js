@@ -17,9 +17,9 @@ const form = document.querySelector('.lorem-form');
 const amount = document.getElementById('amount');
 const result = document.querySelector('.lorem-text');
 
-form.addEventListener('submit', function (e) {
+form.addEventListener('submit', event => {
   // prevents the default behavior of the form --> submitting instantly
-  e.preventDefault();
+  event.preventDefault();
   // parseInt() --> string to number
   const value = parseInt(amount.value);
   const random = Math.floor(Math.random() * text.length);
@@ -34,11 +34,9 @@ form.addEventListener('submit', function (e) {
   else {
     let tempText = text.slice(0, value);
 
-    tempText = tempText.map(function (paragraph) {
-      return `<p class="result">${paragraph}</p>`;
-    })
-    // deletes commas aka joins the array
-    .join("");
+    tempText = tempText.map(paragraph => `<p class="result">${paragraph}</p>`)
+      // deletes commas (joins the array)
+      .join("");
 
     // better way than tempText.forEach(... {result.innerHTML += ...})
     // 'cuz it doesn't trigger the DOM every time it changes 

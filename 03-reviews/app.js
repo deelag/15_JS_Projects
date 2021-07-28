@@ -52,7 +52,7 @@ const randomBtn = document.querySelector('.random-btn');
 let currentItem = 0;
 
 // load intial item
-window.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('DOMContentLoaded', () => {
   showPerson();
 })
 
@@ -66,26 +66,21 @@ function showPerson() {
 }
 
 // show next person
-nextBtn.addEventListener('click', function () {
+nextBtn.addEventListener('click', () => {
   currentItem++;
-  if (currentItem > reviews.length - 1) {
-    currentItem = 0;
-  }
+  currentItem > reviews.length - 1 ? currentItem = 0 : null;
   showPerson();
 })
 
 // show prev person
-prevBtn.addEventListener('click', function () {
+prevBtn.addEventListener('click', () => {
   currentItem--;
-  if (currentItem < 0) {
-    currentItem = reviews.length - 1;
-  }
+  currentItem < 0 ? currentItem = reviews.length - 1 : null;
   showPerson();
 })
 
 // show random person
-
-randomBtn.addEventListener('click', function () {
+randomBtn.addEventListener('click', () => {
   currentItem = Math.floor(Math.random() * reviews.length);
   showPerson();
 })

@@ -5,9 +5,9 @@
 // toggle - toggles class
 
 const navToggle = document.querySelector('.nav-toggle');
-const links = document.querySelector('.links')
+const links = document.querySelector('.links');
 
-navToggle.addEventListener('click', function(){
+navToggle.addEventListener('click', () => {
     // console.log(links.classList);
     // console.log(links.classList.contains("random"));
     // if(links.classList.contains('show-links')){

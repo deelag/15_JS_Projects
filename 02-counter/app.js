@@ -7,8 +7,8 @@ const btns = document.querySelectorAll(".btn"); // ---> returns NodeList
 
 // console.log(btns)
 
-btns.forEach(function (btn) {
-    btn.addEventListener('click', function (evt) {
+btns.forEach(btn => {
+    btn.addEventListener('click', evt => {
         // console.log(e.currentTarget.classList) // ---> DOMTokenList
         const styles = evt.currentTarget.classList;
         if (styles.contains('decrease')) {
@@ -28,5 +28,7 @@ btns.forEach(function (btn) {
         }
 
         value.textContent = count;
+
+        // TODO: prevent the highlighting buttons' text
     })
 })

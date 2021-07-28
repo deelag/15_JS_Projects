@@ -27,7 +27,7 @@ const deadline = document.querySelector('.deadline');
 const items = document.querySelectorAll('.deadline-format h4');
 // console.log(items);
 
-// add +10 days to the current date
+// vars for adding +10 days to the current date
 let tempDate = new Date();
 let tempYear = tempDate.getFullYear();
 let tempMonth = tempDate.getMonth();
@@ -88,16 +88,11 @@ function getRemainingTime() {
   // set values array
   const values = [days, hours, minutes, seconds];
 
-  function format(item) {
-    if (item < 10) {
-      return item = `0${item}`
-    }
-    return item
-  }
+  // adding '0' before 1-digit numbers 
+  const format = (item) => item < 10 ? item = `0${item}` : item;
 
-  items.forEach(function (item, index) {
-    item.innerHTML = format(values[index]);
-  })
+  // formatting
+  items.forEach((item, index) => item.innerHTML = format(values[index]));
 
   if (t < 0) {
     clearInterval(countdown);
@@ -105,6 +100,7 @@ function getRemainingTime() {
   }
 
 }
+
 // countdown
 let countdown = setInterval(getRemainingTime, 1000);
-getRemainingTime();
+getRemainingTime(); // --> to exucute first time

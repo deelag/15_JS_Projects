@@ -86,17 +86,17 @@ const menu = [
 ];
 
 const sectionCenter = document.querySelector('.section-center');
-const btnContainer = document.querySelector('.btn-container')
+const btnContainer = document.querySelector('.btn-container');
 
 // load items
-window.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('DOMContentLoaded', () => {
   displayMenuItems(menu);
   displayMenuButtons();
 })
 
 
 function displayMenuItems(menuItems) {
-  let displayMenu = menuItems.map(function (item) {
+  let displayMenu = menuItems.map(item => {
     // console.log(item);
     return `<article class="menu-item">
     <img src=${item.img} class="photo" alt=${item.title}>
@@ -117,37 +117,30 @@ function displayMenuItems(menuItems) {
 }
 
 function displayMenuButtons() {
-  // TODO: try to use ES6 one-liner instead of .reduce()
-  const categories = menu.reduce(function (accumalator, currentItem) {
-    if (!accumalator.includes(currentItem.category)) {
-      accumalator.push(currentItem.category);
-    }
+  const categories = menu.reduce((accumalator, currentItem) => {
+    !accumalator.includes(currentItem.category) ? accumalator.push(currentItem.category) : null;
     return accumalator;
   },
-    ['all']
+    ['all'] // --> initial value
   );
 
-  const categoryBtns = categories.map(function (category) {
+  const categoryBtns = categories.map(category => {
     return `<button class="filter-btn" type="button" data-id=${category}>
     ${category}
     </button>`
-  }).join('')
+  }).join('');
   btnContainer.innerHTML = categoryBtns;
 
-  const filterBtns = btnContainer.querySelectorAll('.filter-btn')
+  const filterBtns = btnContainer.querySelectorAll('.filter-btn');
   // filter items
-  filterBtns.forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', event => {
       // console.log(e.currentTarget.dataset.id); // --> dataset gets the attribute value after "data-"
-
-      const category = e.currentTarget.dataset.id;
+      const category = event.currentTarget.dataset.id;
       // console.log(category);
-      const menuCategory = menu.filter(function (menuItem) {
-        // console.log(menuItem.category);
-        if (menuItem.category === category) {
-          return menuItem
-        }
-      })
+      
+      // filtering menu items which complies with the condition
+      const menuCategory = menu.filter(menuItem => menuItem.category === category ? menuItem : null)
       if (category === 'all') {
         displayMenuItems(menu);
       } else {

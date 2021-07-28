@@ -21,8 +21,8 @@ clearBtn.addEventListener('click', clearItems);
 window.addEventListener('DOMContentLoaded', setupItems);
 
 // ****** FUNCTIONS **********
-function addItem(e) {
-    e.preventDefault();
+function addItem(event) {
+    event.preventDefault();
     const value = grocery.value;
     // cheating :) --> id is the time when item was added
     const id = new Date().getTime().toString();
@@ -53,7 +53,7 @@ function displayAlert(text, action) {
     alert.classList.add(`alert-${action}`);
 
     // remove alert
-    setTimeout(function () {
+    setTimeout(() => {
         alert.textContent = '';
         alert.classList.remove(`alert-${action}`);
     }, 1000);
@@ -62,9 +62,7 @@ function displayAlert(text, action) {
 function clearItems() {
     const items = document.querySelectorAll('.grocery-item');
     if (items.length > 0) {
-        items.forEach(function (item) {
-            list.removeChild(item);
-        })
+        items.forEach(item => list.removeChild(item));
     }
     container.classList.remove("show-container");
     displayAlert('empty list', 'danger');
@@ -72,8 +70,8 @@ function clearItems() {
     localStorage.removeItem('list');
 }
 
-function deleteItem(e) {
-    const element = e.currentTarget.parentElement.parentElement;
+function deleteItem(event) {
+    const element = event.currentTarget.parentElement.parentElement;
     // the last after '.' is your name after data- attribute
     const id = element.dataset.id;
     list.removeChild(element);
@@ -88,10 +86,10 @@ function deleteItem(e) {
     removeFromLocalStorage(id);
 }
 
-function editItem(e) {
-    const element = e.currentTarget.parentElement.parentElement;
+function editItem(event) {
+    const element = event.currentTarget.parentElement.parentElement;
     // set edit item
-    editElement = e.currentTarget.parentElement.previousElementSibling;
+    editElement = event.currentTarget.parentElement.previousElementSibling;
     // set form value
     grocery.value = editElement.innerHTML;
     editFlag = true;
@@ -119,17 +117,13 @@ function addToLocalStorage(id, value) {
 
 function removeFromLocalStorage(id) {
     let items = getLocalStorage();
-    items = items.filter(function (item) {
-        if (item.id !== id) {
-            return item
-        }
-    })
+    items = items.filter(item => item.id !== id);
     localStorage.setItem('list', JSON.stringify(items));
 }
 
 function editLocalStorage(id, value) {
     let items = getLocalStorage();
-    items = items.map(function (item) {
+    items = items.map(item => {
         if (item.id === id) {
             item.value = value
         }
@@ -155,18 +149,16 @@ function getLocalStorage() {
 // console.log(oranges);
 
 // ****** SETUP ITEMS **********
-function setupItems(){
+function setupItems() {
     let items = getLocalStorage();
     // console.log(items)
-    if (items.length > 0){
-        items.forEach(function(item){
-            createListItem(item.id, item.value);
-        })
+    if (items.length > 0) {
+        items.forEach(item => createListItem(item.id, item.value));
         container.classList.add('show-container');
     }
 }
 
-function createListItem(id, value){
+function createListItem(id, value) {
     const element = document.createElement('article');
     element.classList.add('grocery-item');
     // add id
