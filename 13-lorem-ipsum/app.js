@@ -1,4 +1,3 @@
-// TODO: Generate truly random number of paragraphs
 // lorem text
 const text = [
   `Jelly sweet roll jelly beans biscuit pie macaroon chocolate donut. Carrot cake caramels pie sweet apple pie tiramisu carrot cake. Marzipan marshmallow croissant tootsie roll lollipop. Cupcake lemon drops bear claw gummies. Jelly bear claw gummi bears lollipop cotton candy gummi bears chocolate bar cake cookie. Cupcake muffin danish muffin cookie gummies. Jelly beans tiramisu pudding. Toffee soufflé chocolate cake pastry brownie. Oat cake halvah sweet roll cotton candy croissant lollipop. Macaroon tiramisu chocolate bar candy candy carrot cake jelly sweet. Gummies croissant macaroon dessert. Chocolate cake dragée pie.`,
@@ -22,16 +21,16 @@ form.addEventListener('submit', event => {
   event.preventDefault();
   // parseInt() --> string to number
   const value = parseInt(amount.value);
-  const random = Math.floor(Math.random() * text.length);
+  const randomParagraph = getRandomValueOf(text);
 
   // empty 
   // -1
   // > 9 
-  if (isNaN(value) || value < 0 || value > 9) {
-    result.innerHTML = `<p class="result">${text[random]}</p>`
+  if (isNaN(value) || value < 0) {
+    result.innerHTML = `<p class="result">${text[randomParagraph]}</p>`
   }
   // <= 9 and => 0
-  else {
+  else if (value <= 9 && value >= 0) {
     let tempText = text.slice(0, value);
 
     tempText = tempText.map(paragraph => `<p class="result">${paragraph}</p>`)
@@ -42,5 +41,44 @@ form.addEventListener('submit', event => {
     // 'cuz it doesn't trigger the DOM every time it changes 
     result.innerHTML = tempText;
   }
+  // > 9
+  else if (value > 9) {
+    // copying first 10 elements 
+    let tempText = text;
+    tempText = tempText.map(paragraph => `<p class="result">${paragraph}</p>`)
+      .join("");
+
+    // generating fully random paragraphs 
+    let randomString = "";
+    for (let i = 0; i < value - 10; i++) {
+      for (let j = 0; j < 80; j++) {
+        randomString += (randomString.endsWith(". ") || randomString.endsWith("! ") || randomString.endsWith("? ") || j === 0)
+          ? `${capitalizeLetter(getRandomWord())} `
+          : `${getRandomWord()} `;
+      }
+      randomString = randomString.endsWith(". ") || randomString.endsWith("! ") || randomString.endsWith("? ")
+        ? randomString
+        : randomString.slice(0, randomString.length - 1) + ".";
+
+      tempText += `<p class="result">${randomString}</p>`;
+      randomString = "";
+    }
+
+    result.innerHTML = tempText;
+  }
 
 })
+
+function getRandomValueOf(item) {
+  return Math.floor(Math.random() * item.length);
+}
+
+function getRandomWord() {
+  let words = text[getRandomValueOf(text)].split(' ');
+  return words[getRandomValueOf(words)].toLocaleLowerCase();
+}
+
+function capitalizeLetter(word) {
+  let capitalizedLetter = word.charAt(0).toUpperCase();
+  return capitalizedLetter + word.slice(1, word.length);
+}
