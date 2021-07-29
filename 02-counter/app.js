@@ -29,6 +29,8 @@ btns.forEach(btn => {
 
         value.textContent = count;
 
-        // TODO: prevent the highlighting buttons' text
     })
+
+    // prevent the highlighting buttons' text on clicks
+    btn.addEventListener('selectstart', evt => evt.preventDefault());
 })
